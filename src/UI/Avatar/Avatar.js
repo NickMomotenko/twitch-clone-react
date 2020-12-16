@@ -6,8 +6,8 @@ import StatusIndicator from "../StatusIndicator/StatusIndicator";
 
 const AvatarWrapp = styled.div`
   display: inline-block;
-  width: 45px;
-  height: 45px;
+  width: ${({ size }) => (size ? `${size}px` : "45px")};
+  height: ${({ size }) => (size ? `${size}px` : "45px")};
   position: relative;
 `;
 
@@ -18,14 +18,28 @@ const AvatarIcon = styled.img.attrs(({ url }) => ({
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: ${({ borderRadius }) =>
+    borderRadius ? `${borderRadius}px` : "50%"};
 `;
 
-const Avatar = ({ url, status }) => {
+const Avatar = ({
+  url,
+  status,
+  size,
+  borderRadius,
+  statusColor,
+  statusBorderColor,
+}) => {
   return (
-    <AvatarWrapp>
-      <AvatarIcon url={url} />
-      {status && <StatusIndicator status={status} />}
+    <AvatarWrapp size={size}>
+      <AvatarIcon url={url} borderRadius={borderRadius} />
+      {status && (
+        <StatusIndicator
+          status={status}
+          statusColor={statusColor}
+          statusBorderColor={statusBorderColor}
+        />
+      )}
     </AvatarWrapp>
   );
 };

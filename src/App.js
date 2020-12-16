@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 
+import { useData } from "./hooks/data";
+import { useUsersData } from "./hooks/users";
+
 import streamingIcon from "./assets/icons/mic.png";
 import arrowIcon from "./assets/icons/left-arrow.png";
 
@@ -12,6 +15,10 @@ import Header from "./components/Header/Header";
 import Button from "./UI/Button/Button";
 import ButtonCircle from "./UI/Button/ButtonCircle";
 import ListItem from "./UI/List/ListItem";
+
+import Title from "./UI/General/Title";
+import Item from "./UI/General/Item";
+import GeneralList from "./UI/General/GeneralList";
 
 const AppWrapper = styled.div`
   height: 100%;
@@ -37,6 +44,14 @@ const AppLogo = styled(AppRow)`
 
 const AppMainDashboadr = styled.div`
   flex: 1;
+  padding: 0 50px;
+  overflow-x: hidden;
+`;
+
+const AppMainContentTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const AppBarContent = styled.div`
@@ -57,6 +72,8 @@ const AppBarContentButton = styled.div`
   left: 50%;
   transform: translateX(-50%);
 `;
+
+const AppMainContent = styled.div``;
 
 const App = () => {
   const [recommendation, setRecommendation] = useState([
@@ -79,6 +96,12 @@ const App = () => {
       category: "Fortnite",
     },
   ]);
+
+  const { topGames, recommendedGames } = useData();
+  const { data } = useUsersData();
+
+  console.log(data && data.results);
+
   return (
     <AppWrapper>
       <AppBar>
@@ -106,6 +129,32 @@ const App = () => {
       </AppBar>
       <AppMainDashboadr>
         <Header />
+        <AppMainContent>
+          <AppMainContentTitle>
+            <Title title="Recommended for you" />
+          </AppMainContentTitle>
+          <GeneralList marginRight="40" wrap="false">
+            {recommendedGames.map((item) => (
+              <Item
+                key={item.id}
+                widthCount={3.3}
+                iconHeight={250}
+                marginRight="40"
+                {...item}
+              />
+            ))}
+          </GeneralList>
+
+          <AppMainContentTitle>
+            <Title title="Top Games" />
+            <Button label="More games" bgColor="#1f1d24" />
+          </AppMainContentTitle>
+          <GeneralList marginRight="30">
+            {topGames.map((item) => (
+              <Item key={item.id} widthCount={9} marginRight="30" {...item} />
+            ))}
+          </GeneralList>
+        </AppMainContent>
       </AppMainDashboadr>
     </AppWrapper>
   );

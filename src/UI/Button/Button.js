@@ -6,7 +6,7 @@ const ButtonWrapp = styled.button`
   display: flex;
   align-items: center;
   border-radius: 7px;
-  background-color: #52299e;
+  background-color: ${(props) => (props.bgColor ? props.bgColor : "#52299e")};
   padding: 14px 30px;
   transition: all 0.4s;
 
@@ -28,11 +28,11 @@ const ButtonIcon = styled.img.attrs(({ url }) => ({
   margin-right: 6px;
 `;
 
-const Button = ({ label, icon }) => {
+const Button = ({ label, icon, bgColor }) => {
   return (
-    <ButtonWrapp>
+    <ButtonWrapp bgColor={bgColor}>
       {icon && <ButtonIcon url={icon} />}
-      <ButtonTitle>{label}</ButtonTitle>
+      {label && <ButtonTitle>{label}</ButtonTitle>}
     </ButtonWrapp>
   );
 };

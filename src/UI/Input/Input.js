@@ -7,6 +7,7 @@ const InputWrapp = styled.input`
   border: 1px solid #18171c;
   background-color: #1f1d24;
   padding: 18px 19px;
+  width: 100%;
 
   ::placholder {
     font-size: 16px;
