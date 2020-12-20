@@ -20,6 +20,8 @@ import Title from "./UI/General/Title";
 import Item from "./UI/General/Item";
 import GeneralList from "./UI/General/GeneralList";
 
+import ChanelDashboard from "./components/ChanelDashboard/ChanelDashboard";
+
 const AppWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -44,6 +46,8 @@ const AppLogo = styled(AppRow)`
 
 const AppMainDashboadr = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 0 50px;
   overflow-x: hidden;
 `;
@@ -64,6 +68,8 @@ const AppBarContent = styled.div`
   }
 `;
 
+const AppMainContentBlock = styled.div``;
+
 const AppBarContentButton = styled.div`
   display: inline-block;
 
@@ -73,7 +79,9 @@ const AppBarContentButton = styled.div`
   transform: translateX(-50%);
 `;
 
-const AppMainContent = styled.div``;
+const AppMainContent = styled.div`
+  flex: 1;
+`;
 
 const App = () => {
   const [recommendation, setRecommendation] = useState([
@@ -98,9 +106,7 @@ const App = () => {
   ]);
 
   const { topGames, recommendedGames } = useData();
-  const { data } = useUsersData();
-
-  console.log(data && data.results);
+  // const { data } = useUsersData();
 
   return (
     <AppWrapper>
@@ -130,30 +136,33 @@ const App = () => {
       <AppMainDashboadr>
         <Header />
         <AppMainContent>
-          <AppMainContentTitle>
-            <Title title="Recommended for you" />
-          </AppMainContentTitle>
-          <GeneralList marginRight="40" wrap="false">
-            {recommendedGames.map((item) => (
-              <Item
-                key={item.id}
-                widthCount={3.3}
-                iconHeight={250}
-                marginRight="40"
-                {...item}
-              />
-            ))}
-          </GeneralList>
+          {/* <AppMainContentBlock>
+            <AppMainContentTitle>
+              <Title title="Recommended for you" />
+            </AppMainContentTitle>
+            <GeneralList marginRight="40" wrap="false">
+              {recommendedGames.map((item) => (
+                <Item
+                  key={item.id}
+                  widthCount={3.3}
+                  iconHeight={250}
+                  marginRight="40"
+                  {...item}
+                />
+              ))}
+            </GeneralList>
 
-          <AppMainContentTitle>
-            <Title title="Top Games" />
-            <Button label="More games" bgColor="#1f1d24" />
-          </AppMainContentTitle>
-          <GeneralList marginRight="30">
-            {topGames.map((item) => (
-              <Item key={item.id} widthCount={9} marginRight="30" {...item} />
-            ))}
-          </GeneralList>
+            <AppMainContentTitle>
+              <Title title="Top Games" />
+              <Button label="More games" bgColor="#1f1d24" />
+            </AppMainContentTitle>
+            <GeneralList marginRight="30">
+              {topGames.map((item) => (
+                <Item key={item.id} widthCount={9} marginRight="30" {...item} />
+              ))}
+            </GeneralList>
+          </AppMainContentBlock> */}
+          <ChanelDashboard />
         </AppMainContent>
       </AppMainDashboadr>
     </AppWrapper>

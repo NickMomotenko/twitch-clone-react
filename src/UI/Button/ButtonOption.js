@@ -11,8 +11,8 @@ const ButtonOptionIcon = styled.img.attrs(({ url }) => ({
 }))`
   display: inline-block;
 
-  height: 17px;
-  width: 17px;
+  height: ${(props) => (props.size ? props.size : "17px")};
+  width: ${(props) => (props.size ? props.size : "17px")};
 `;
 
 const ButtonOptionAlert = styled.div`
@@ -26,16 +26,16 @@ const ButtonOptionAlert = styled.div`
   color: #f5f5f5;
   font-size: 12px;
   text-align: center;
-  
+
   position: absolute;
   top: -16px;
   right: -10px;
 `;
 
-const ButtonOption = ({ icon, counter }) => {
+const ButtonOption = ({ icon, counter, onClick, size }) => {
   return (
-    <ButtonOptionWrapp>
-      <ButtonOptionIcon url={icon} />
+    <ButtonOptionWrapp onClick={onClick}>
+      <ButtonOptionIcon url={icon} size={size} />
       {counter && <ButtonOptionAlert>{counter}</ButtonOptionAlert>}
     </ButtonOptionWrapp>
   );

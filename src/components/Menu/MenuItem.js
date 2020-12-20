@@ -6,6 +6,7 @@ import sprite from "../../assets/menu/sprite.svg";
 
 const MenuItemWrapp = styled.li`
   margin-bottom: 25px;
+  position: relative;
 
   &:last-child {
     margin-bottom: 0;

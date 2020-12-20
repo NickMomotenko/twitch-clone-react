@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
+@font-face {
+  font-family: "Corbel";
+  src: local("Corbel"), url(./fonts/corbel.woff2) format("woff2");
+}
+
 * {
   box-sizing: border-box;
 }
@@ -14,7 +19,8 @@ html,
 body {
   margin: 0;
   background-color: #25222d;
-  font-family: "Roboto";
+  /* font-family: "Roboto"; */
+  font-family: "Corbel";
 }
 
 ul,
@@ -31,7 +37,8 @@ button {
   cursor: pointer;
 }
 
-input {
+input,
+textarea {
   border: 1px solid transparent;
   outline: none;
   background: transparent;
