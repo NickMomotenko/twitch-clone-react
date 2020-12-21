@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 
 import { generateID } from "../../utils";
 
+import { useMessagesData } from "../../hooks/messages";
+
 import sendIcon from "../../assets/chat/send.svg";
-import smileIcon from "../../assets/icons/smile-face.svg";
+import smileIcon from "../../assets/icons/winking_face.gif";
+import smileIcon1 from "../../assets/icons/smile-face.svg";
 import optionIcon from "../../assets/icons/gear-option.svg";
 import closeIcon from "../../assets/icons/close.svg";
 
@@ -62,17 +68,24 @@ const ChatBoardRules = styled.button`
 `;
 
 const ChatBoardMain = styled.div`
-  flex: 1;
-  /* overflow-y: scroll; */
-  padding: 20px;
+  padding: 0 20px;
+  margin: 20px 0;
+  overflow-y: scroll;
 
-  /* ::-webkit-scrollbar { width: 3px; height: 3px;};
-    ::-webkit-scrollbar-button {  background-color: #666; };
-    ::-webkit-scrollbar-track {  background-color: #999;};
-    ::-webkit-scrollbar-track-piece { background-color: #ffffff;};
-    ::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;};
-    ::-webkit-scrollbar-corner { background-color: #999;}};
-    ::-webkit-resizer { background-color: #666;}; */
+  ::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #818a96;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
 `;
 
 const ChatBoardBottom = styled.div``;
@@ -83,6 +96,7 @@ const ChatBoardButtons = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 
   button {
     &:last-child {
@@ -128,83 +142,39 @@ const ChatBoardBack = styled.div`
   }
 `;
 
+const ChatBoardPickerBlock = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 100%;
+  margin-bottom: 80px;
+
+  .emoji-mart {
+    max-width: 100%;
+  }
+`;
+
 const ChatBoard = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: generateID(),
-      first_name: "Pavel",
-      last_name: "Mourton",
-      text: "Hello ;)",
-      time: "14:34",
-    },
-    {
-      id: generateID(),
-      first_name: "Stella",
-      last_name: "Allright",
-      text: "Hello ;)",
-      time: "8:15",
-    },
-    {
-      id: generateID(),
-      first_name: "Cobb",
-      last_name: "Pashler",
-      text: "Quisque id justo",
-      time: "13:07",
-    },
-    {
-      id: generateID(),
-      first_name: "Allx",
-      last_name: "Vauter",
-      text:
-        "Id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.",
-      time: "13:29",
-    },
-
-    {
-      id: generateID(),
-      first_name: "Berrie",
-      last_name: "Basilio",
-      text: "Etiam pretium iaculis justo",
-      time: "18:28",
-    },
-    {
-      id: generateID(),
-      first_name: "Berrie",
-      last_name: "Basilio",
-      text: "Etiam pretium iaculis justo",
-      time: "18:28",
-    },
-    {
-      id: generateID(),
-      first_name: "Berrie",
-      last_name: "Basilio",
-      text: "Etiam pretium iaculis justo",
-      time: "18:28",
-    },
-    {
-      id: generateID(),
-      first_name: "Berrie",
-      last_name: "Basilio",
-      text: "Etiam pretium iaculis justo",
-      time: "18:28",
-    },
-    {
-      id: generateID(),
-      first_name: "Berrie",
-      last_name: "Basilio",
-      text: "Etiam pretium iaculis justo",
-      time: "18:28",
-    },
-    {
-      id: generateID(),
-      first_name: "Berrie",
-      last_name: "Basilio",
-      text: "Etiam pretium iaculis justo",
-      time: "18:28",
-    },
-  ]);
-
   const [isFullSize, setIsFullSize] = useState(false);
+  const [isEmojiPickerActive, setIsEmojiPickerActive] = useState(false);
+
+  const chatBlockRef = React.useRef(null);
+  const pickerRef = React.useRef(null);
+
+  const { messages } = useMessagesData();
+
+  React.useEffect(() => {
+    chatBlockRef.current.scrollTop = chatBlockRef.current.scrollHeight;
+  }, [messages]);
+
+  React.useEffect(() => {
+    document.addEventListener("click", (e) => {
+      console.log(e.target);
+      // if (e.target !== pickerRef.current) {
+      //   console.log(1);
+      //   // setIsEmojiPickerActive(false);
+      // }
+    });
+  });
 
   const changeChatBoardSize = () => {
     setIsFullSize(!isFullSize);
@@ -226,17 +196,28 @@ const ChatBoard = () => {
             <ButtonOption icon={closeIcon} onClick={changeChatBoardSize} />
           </ChatBoardHeaderCol>
         </ChatBoardHeader>
-        <ChatBoardMain>
-          {messages.map((item) => (
-            <Message key={item.id} {...item} />
-          ))}
+        <ChatBoardMain ref={chatBlockRef}>
+          {messages &&
+            messages.map((item) => <Message key={item.id} {...item} />)}
         </ChatBoardMain>
         <ChatBoardBottom>
           <ChatBoardTextArea>
             <TextArea placeholder="Send message..." name="send" />
           </ChatBoardTextArea>
           <ChatBoardButtons>
-            <ButtonOption icon={smileIcon} />
+            {isEmojiPickerActive ? (
+              <ChatBoardPickerBlock>
+                <Picker ref={pickerRef} />
+              </ChatBoardPickerBlock>
+            ) : (
+              <></>
+            )}
+            <ButtonOption icon={smileIcon1} size="25px" />
+            <ButtonOption
+              icon={smileIcon}
+              onClick={() => setIsEmojiPickerActive(true)}
+              size="25px"
+            />
             <ButtonOption icon={sendIcon} size="25px" />
           </ChatBoardButtons>
         </ChatBoardBottom>

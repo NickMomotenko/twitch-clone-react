@@ -49,7 +49,7 @@ const AppMainDashboadr = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 50px;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 `;
 
 const AppMainContentTitle = styled.div`
@@ -80,7 +80,7 @@ const AppBarContentButton = styled.div`
 `;
 
 const AppMainContent = styled.div`
-  flex: 1;
+  height: 83%;
 `;
 
 const App = () => {

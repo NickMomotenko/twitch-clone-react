@@ -10,6 +10,7 @@ const ChanelDashboardWrapp = styled.div`
 `;
 
 const ChanelDashboardCol = styled.div`
+  height:100%;
   &:first-child {
     flex: 1;
   }
