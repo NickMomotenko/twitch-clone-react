@@ -25,10 +25,9 @@ import Message from "../../UI/Message/Message";
 const ChatBoardWrapp = styled.div`
   height: 100%;
   transition: width 1s;
-  width: 360px;
+
   padding: 10px;
 
-  overflow: hidden;
   position: relative;
 `;
 
@@ -36,6 +35,7 @@ const ChatBoardContent = styled.div`
   height: 100%;
   display: inline-flex;
   flex-direction: column;
+  width: 360px;
 `;
 
 const ChatBoardHeader = styled.div`
@@ -69,7 +69,7 @@ const ChatBoardRules = styled.button`
 
 const ChatBoardMain = styled.div`
   padding: 0 20px;
-  margin: 20px 0;
+  margin-bottom: 20px;
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
@@ -116,7 +116,8 @@ const ChatBoardBack = styled.div`
   top: 0;
   position: absolute;
   transition: all 0.5s;
-  right: ${(props) => (props.active ? "0" : "-50px")};
+  transition-delay: ${(props) => (props.active ? "1s" : "0")};
+  left: ${(props) => (props.active ? "0" : "initial")};
   opacity: ${(props) => (props.active ? "1" : "0")};
 
   display: flex;
@@ -153,13 +154,15 @@ const ChatBoardPickerBlock = styled.div`
   }
 `;
 
-const ChatBoard = () => {
-  const [isFullSize, setIsFullSize] = useState(false);
+const ChatBoard = (props) => {
   const [isEmojiPickerActive, setIsEmojiPickerActive] = useState(false);
 
   const chatBlockRef = React.useRef(null);
   const pickerRef = React.useRef(null);
+  const chatBoardContentRef = React.useRef(null);
+  const closeButtonRef = React.useRef(null);
 
+  let { isFullSize, setIsFullSize } = props;
   const { messages } = useMessagesData();
 
   React.useEffect(() => {
@@ -167,22 +170,18 @@ const ChatBoard = () => {
   }, [messages]);
 
   React.useEffect(() => {
-    document.addEventListener("click", (e) => {
-      console.log(e.target);
-      // if (e.target !== pickerRef.current) {
-      //   console.log(1);
-      //   // setIsEmojiPickerActive(false);
-      // }
-    });
-  });
-
-  const changeChatBoardSize = () => {
-    setIsFullSize(!isFullSize);
-  };
+    if (isFullSize) {
+      chatBoardContentRef.current.style.visibility = "hidden";
+      closeButtonRef.current.style.transform = `rotate(180deg)`;
+    } else {
+      chatBoardContentRef.current.style.visibility = "visible";
+      closeButtonRef.current.style.transform = `rotate(0)`;
+    }
+  }, [isFullSize]);
 
   return (
     <ChatBoardWrapp>
-      <ChatBoardContent active={isFullSize}>
+      <ChatBoardContent ref={chatBoardContentRef} active={isFullSize}>
         <ChatBoardHeader>
           <ChatBoardHeaderCol>
             <ChatBoardRules>Chat rules</ChatBoardRules>
@@ -193,7 +192,10 @@ const ChatBoard = () => {
 
           <ChatBoardHeaderCol>
             <ButtonOption icon={optionIcon} />
-            <ButtonOption icon={closeIcon} onClick={changeChatBoardSize} />
+            <ButtonOption
+              icon={closeIcon}
+              onClick={() => setIsFullSize(true)}
+            />
           </ChatBoardHeaderCol>
         </ChatBoardHeader>
         <ChatBoardMain ref={chatBlockRef}>
@@ -224,6 +226,11 @@ const ChatBoard = () => {
       </ChatBoardContent>
 
       <ChatBoardBack active={isFullSize}>
+        <ButtonOption
+          ref={closeButtonRef}
+          icon={closeIcon}
+          onClick={() => setIsFullSize(false)}
+        />
         <OnlineStatus counter={398} />
         <ChatBoardMessageButton>New message</ChatBoardMessageButton>
       </ChatBoardBack>

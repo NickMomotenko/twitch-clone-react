@@ -16,6 +16,10 @@ html,
   width: 100%;
 }
 
+#root {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   background-color: #25222d;

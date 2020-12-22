@@ -32,13 +32,24 @@ const ButtonOptionAlert = styled.div`
   right: -10px;
 `;
 
-const ButtonOption = ({ icon, counter, onClick, size }) => {
-  return (
-    <ButtonOptionWrapp onClick={onClick}>
+// const ButtonOption = React.forwardRef({ icon, counter, onClick, size ,ref }) => {
+//   return (
+//     <ButtonOptionWrapp onClick={onClick} ref={ref}>
+//       <ButtonOptionIcon url={icon} size={size} />
+//       {counter && <ButtonOptionAlert>{counter}</ButtonOptionAlert>}
+//     </ButtonOptionWrapp>
+//   );
+// });
+
+const ButtonOption = React.forwardRef(
+  ({ icon, counter, onClick, size, children }, ref) => (
+    <ButtonOptionWrapp onClick={onClick} ref={ref}>
       <ButtonOptionIcon url={icon} size={size} />
       {counter && <ButtonOptionAlert>{counter}</ButtonOptionAlert>}
+
+      {children}
     </ButtonOptionWrapp>
-  );
-};
+  )
+);
 
 export default ButtonOption;

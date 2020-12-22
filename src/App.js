@@ -49,7 +49,6 @@ const AppMainDashboadr = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 50px;
-  /* overflow-x: hidden; */
 `;
 
 const AppMainContentTitle = styled.div`
