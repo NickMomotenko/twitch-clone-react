@@ -187,7 +187,7 @@ const ChatBoard = (props) => {
             <ChatBoardRules>Chat rules</ChatBoardRules>
           </ChatBoardHeaderCol>
           <ChatBoardHeaderCol>
-            <OnlineStatus counter={398} />
+            <OnlineStatus counter={20} />
           </ChatBoardHeaderCol>
 
           <ChatBoardHeaderCol>
@@ -231,7 +231,7 @@ const ChatBoard = (props) => {
           icon={closeIcon}
           onClick={() => setIsFullSize(false)}
         />
-        <OnlineStatus counter={398} />
+        {/* <OnlineStatus counter={398} /> */}
         <ChatBoardMessageButton>New message</ChatBoardMessageButton>
       </ChatBoardBack>
     </ChatBoardWrapp>

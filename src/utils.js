@@ -13,3 +13,7 @@ export const generateUniqColor = () => {
 export const generateID = () => {
   return "_" + Math.random().toString(36).substr(2, 9);
 };
+
+export const getRandomNumber = (max) =>{
+  return Math.floor(Math.random() * Math.floor(max))
+}
