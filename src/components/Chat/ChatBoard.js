@@ -187,7 +187,7 @@ const ChatBoard = (props) => {
             <ChatBoardRules>Chat rules</ChatBoardRules>
           </ChatBoardHeaderCol>
           <ChatBoardHeaderCol>
-            <OnlineStatus counter={20} />
+            {/* <OnlineStatus counter={20} /> */}
           </ChatBoardHeaderCol>
 
           <ChatBoardHeaderCol>

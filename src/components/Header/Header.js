@@ -2,6 +2,9 @@ import React from "react";
 
 import styled from "styled-components";
 
+import diamondIcon from "../../assets/menu/diamond.svg";
+import searchIcon from "../../assets/icons/search.png";
+
 import Button from "../../UI/Button/Button";
 import ButtonOption from "../../UI/Button/ButtonOption";
 
@@ -39,7 +42,7 @@ const HeaderCol = styled.div`
 const HeaderOptions = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 44px;
+  margin-right: 44px;
 
   button {
     margin-right: 20px;
@@ -86,19 +89,19 @@ const Header = () => {
     <HeaderWrapp>
       <HeaderCol>
         <HeaderInput>
-          <Input placeholder="Search streamers" />
+          <Input placeholder="Search streamers" icon={searchIcon} />
         </HeaderInput>
         <HeaderButton>
-          <Button label="Get bites" icon="" />
+          <Button label="Get bites" icon={diamondIcon} />
         </HeaderButton>
       </HeaderCol>
       <HeaderCol>
-        <UserBlock />
         <HeaderOptions>
           {options.map(({ id, icon, ...rest }) => (
             <ButtonOption key={id} icon={icon} {...rest} />
           ))}
         </HeaderOptions>
+        <UserBlock />
       </HeaderCol>
     </HeaderWrapp>
   );

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Route, Switch } from "react-router-dom";
+
 import styled from "styled-components";
 
 import { useData } from "./hooks/data";
@@ -83,29 +85,10 @@ const AppMainContent = styled.div`
 `;
 
 const App = () => {
-  const [recommendation, setRecommendation] = useState([
-    {
-      id: 1,
-      avatar:
-        "https://lh3.googleusercontent.com/proxy/e04v6gmEhkiHH2XZosp4kMXikH0bIz1-POReFyuoq-GjP_CcAoHM5SfGMV60nUvyoRwonoPu6aCw98BuEzWEAFj_3S0JVf0gPJu-HtL0ag",
-      online: true,
-      viewer: 565,
-      title: "Test title",
-      category: "Fortnite",
-    },
-    {
-      id: 2,
-      avatar:
-        "https://lh3.googleusercontent.com/proxy/e04v6gmEhkiHH2XZosp4kMXikH0bIz1-POReFyuoq-GjP_CcAoHM5SfGMV60nUvyoRwonoPu6aCw98BuEzWEAFj_3S0JVf0gPJu-HtL0ag",
-      online: false,
-      viewer: 977,
-      title: "Test title 2",
-      category: "Fortnite",
-    },
-  ]);
+  // const paths = []
 
   const { topGames, recommendedGames } = useData();
-  // const { data } = useUsersData();
+  const { data } = useUsersData();
 
   return (
     <AppWrapper>
@@ -126,7 +109,7 @@ const App = () => {
             <ButtonCircle icon={arrowIcon} />
           </AppBarContentButton>
           <AppRow>
-            {recommendation.map((item) => (
+            {data?.map((item) => (
               <ListItem key={item.id} {...item} />
             ))}
           </AppRow>
@@ -135,33 +118,42 @@ const App = () => {
       <AppMainDashboadr>
         <Header />
         <AppMainContent>
-          {/* <AppMainContentBlock>
-            <AppMainContentTitle>
-              <Title title="Recommended for you" />
-            </AppMainContentTitle>
-            <GeneralList marginRight="40" wrap="false">
-              {recommendedGames.map((item) => (
-                <Item
-                  key={item.id}
-                  widthCount={3.3}
-                  iconHeight={250}
-                  marginRight="40"
-                  {...item}
-                />
-              ))}
-            </GeneralList>
+          <Switch>
+            <Route path="/dashboard" component={ChanelDashboard} />
+            <Route path="/">
+              <AppMainContentBlock>
+                <AppMainContentTitle>
+                  <Title title="Recommended for you" />
+                </AppMainContentTitle>
+                <GeneralList marginRight="40" wrap="false">
+                  {recommendedGames.map((item) => (
+                    <Item
+                      key={item.id}
+                      widthCount={3.3}
+                      iconHeight={250}
+                      marginRight="40"
+                      {...item}
+                    />
+                  ))}
+                </GeneralList>
 
-            <AppMainContentTitle>
-              <Title title="Top Games" />
-              <Button label="More games" bgColor="#1f1d24" />
-            </AppMainContentTitle>
-            <GeneralList marginRight="30">
-              {topGames.map((item) => (
-                <Item key={item.id} widthCount={9} marginRight="30" {...item} />
-              ))}
-            </GeneralList>
-          </AppMainContentBlock> */}
-          <ChanelDashboard />
+                <AppMainContentTitle>
+                  <Title title="Top Games" />
+                  <Button label="More games" bgColor="#1f1d24" />
+                </AppMainContentTitle>
+                <GeneralList marginRight="30">
+                  {topGames.map((item) => (
+                    <Item
+                      key={item.id}
+                      widthCount={9}
+                      marginRight="30"
+                      {...item}
+                    />
+                  ))}
+                </GeneralList>
+              </AppMainContentBlock>
+            </Route>
+          </Switch>
         </AppMainContent>
       </AppMainDashboadr>
     </AppWrapper>

@@ -31,12 +31,12 @@ const OnlineStatus = ({ counter }) => {
 
   React.useEffect(() => {
     setInterval(() => {
-      let test = getRandomNumber(100);
-      counterAnimation(counterValue, test, 5000);
+      let randomNumber = getRandomNumber(100);
+      counterAnimation(counterValue, randomNumber, 5000);
 
-      setCounterValue(test);
+      setCounterValue(randomNumber);
     }, 10000);
-  });
+  }, [counterValue]);
 
   const counterAnimation = (start, end, duration) => {
     let startTimestamp;
@@ -47,9 +47,9 @@ const OnlineStatus = ({ counter }) => {
       }
 
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      counterRef.current.innerText = Math.floor(
+      counterRef.current.innerText = `${Math.floor(
         progress * (end - start) + start
-      );
+      )} viewers`;
 
       if (progress < 1) window.requestAnimationFrame(step);
     };

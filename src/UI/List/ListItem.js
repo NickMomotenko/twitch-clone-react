@@ -26,14 +26,14 @@ const ListItemCol = styled.div`
   }
 `;
 
-const ListItem = ({ avatar, online, title, viewer, category }) => {
+const ListItem = ({ picture, login, online, title, viewer, category }) => {
   return (
     <ListItemWrapp>
       <ListItemCol>
-        <Avatar url={avatar} status={online} />
+        <Avatar url={picture.medium} status={online} />
       </ListItemCol>
       <ListItemCol>
-        <ListTitle title={title} />
+        <ListTitle title={login.username} />
         <Viewer value={viewer} />
         <ListGameTitle title={online ? category : "12 minute ago"} />
       </ListItemCol>

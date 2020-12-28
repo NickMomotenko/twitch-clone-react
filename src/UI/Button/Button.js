@@ -18,21 +18,24 @@ const ButtonWrapp = styled.button`
 const ButtonTitle = styled.div`
   font-size: 16px;
   color: #ebe7f4;
-`;
 
-const ButtonIcon = styled.img.attrs(({ url }) => ({
-  src: url,
-}))`
-  display: inline-block;
-  height: 15px;
-  margin-right: 6px;
+  &:before {
+    content: "";
+    background-image: url(${(props) => props.icon});
+    background-repeat: no-repeat;
+    vertical-align: middle;
+
+    display: inline-block;
+    height: ${(props) => (props.icon ? "15px" : 0)};
+    width: ${(props) => (props.icon ? "15px" : 0)};
+    margin-right: ${(props) => (props.icon ? "6px" : 0)};
+  }
 `;
 
 const Button = ({ label, icon, bgColor }) => {
   return (
     <ButtonWrapp bgColor={bgColor}>
-      {icon && <ButtonIcon url={icon} />}
-      {label && <ButtonTitle>{label}</ButtonTitle>}
+      {label && <ButtonTitle icon={icon}>{label}</ButtonTitle>}
     </ButtonWrapp>
   );
 };
