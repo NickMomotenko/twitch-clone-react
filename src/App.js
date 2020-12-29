@@ -24,6 +24,8 @@ import GeneralList from "./UI/General/GeneralList";
 
 import ChanelDashboard from "./components/ChanelDashboard/ChanelDashboard";
 
+import Login from "./pages/Login/Login";
+
 const AppWrapper = styled.div`
   height: 100%;
   width: 100%;

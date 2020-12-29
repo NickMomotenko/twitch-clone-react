@@ -11,7 +11,6 @@ import ButtonOption from "../Button/ButtonOption";
 import { AlertSmall } from "../../modules/Alert/AlertSmall";
 
 const MessageWrapp = styled.div`
-  display: flex;
   margin-bottom: 15px;
   position: relative;
   cursor: pointer;
@@ -28,12 +27,12 @@ const MessageWrapp = styled.div`
   &:hover {
     background-color: #332f40;
 
-    .sc-kEjbxe {
+    .sc-jrAGrp{
       visibility: visible;
     }
   }
 
-  .sc-kEjbxe {
+  .sc-jrAGrp  {
     position: absolute;
     visibility: hidden;
     top: -13px;
@@ -44,7 +43,7 @@ const MessageWrapp = styled.div`
     line-height: 100%;
 
     &:hover {
-      .sc-iBaPrD {
+      .sc-cTkwdZ {
         visibility: visible;
       }
     }
@@ -53,18 +52,18 @@ const MessageWrapp = styled.div`
 
 const MessageUserStatus = styled.div``;
 
-const MessageFullName = styled.div`
+const MessageFullName = styled.span`
   color: ${(props) => (props.color ? props.color : "blue")};
 `;
 
-const MessageTime = styled.div`
+const MessageTime = styled.span`
   color: #e6bdbd;
   font-size: 15px;
   margin-left: 10px;
   min-width: 32px;
 `;
 
-const MessageText = styled.div`
+const MessageText = styled.span`
   color: #eee7e7;
   margin-left: 10px;
 `;
