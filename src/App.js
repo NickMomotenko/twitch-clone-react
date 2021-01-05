@@ -87,11 +87,12 @@ const AppMainContent = styled.div`
 `;
 
 const App = () => {
-  // const paths = []
+ 
 
   const { topGames, recommendedGames } = useData();
   const { data } = useUsersData();
 
+ 
   return (
     <AppWrapper>
       <AppBar>
@@ -120,9 +121,9 @@ const App = () => {
       <AppMainDashboadr>
         <Header />
         <AppMainContent>
-          <Switch>
+          {/* <Switch>
             <Route path="/dashboard" component={ChanelDashboard} />
-            <Route path="/">
+            <Route path="/dashboard">
               <AppMainContentBlock>
                 <AppMainContentTitle>
                   <Title title="Recommended for you" />
@@ -155,7 +156,7 @@ const App = () => {
                 </GeneralList>
               </AppMainContentBlock>
             </Route>
-          </Switch>
+          </Switch> */}
         </AppMainContent>
       </AppMainDashboadr>
     </AppWrapper>

@@ -7,7 +7,7 @@ const InputContainer = styled.div`
 
   &:before {
     content: "";
-    display: inline-block;
+    display: ${(props) => (props.icon ? "inline-block" : "none")};
     height: 20px;
     width: 20px;
     background-image: url(${(props) => props.icon && props.icon});
@@ -25,7 +25,7 @@ const InputWrapp = styled.input`
   border: 1px solid #18171c;
   background-color: #1f1d24;
   padding: 18px 19px;
-  padding-left: 51px;
+  padding-left: ${(props) => props.icon && "51px"};
   font-size: 16px;
   color: #656565;
   width: 100%;
@@ -36,10 +36,16 @@ const InputWrapp = styled.input`
   }
 `;
 
-const Input = ({ placeholder, icon }) => {
+const Input = ({ placeholder, value, name, onChange, icon }) => {
   return (
     <InputContainer icon={icon}>
-      <InputWrapp placeholder={placeholder} />
+      <InputWrapp
+        placeholder={placeholder}
+        value={value ? value : ""}
+        icon={icon ? true : false}
+        name={name}
+        onChange={(event) => onChange(event.target.name, event.target.value)}
+      />
     </InputContainer>
   );
 };

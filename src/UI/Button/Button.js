@@ -32,9 +32,13 @@ const ButtonTitle = styled.div`
   }
 `;
 
-const Button = ({ label, icon, bgColor }) => {
+const Button = ({ label, icon, bgColor, onClick, type }) => {
   return (
-    <ButtonWrapp bgColor={bgColor}>
+    <ButtonWrapp
+      type={type ? type : "button"}
+      bgColor={bgColor}
+      onClick={onClick}
+    >
       {label && <ButtonTitle icon={icon}>{label}</ButtonTitle>}
     </ButtonWrapp>
   );

@@ -1,22 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+
 import reportWebVitals from "./reportWebVitals";
 
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
-import Login from "./pages/Login/Login";
+import Wrapper from "./components/Wrapper/Wrapper";
+import { AuthProvider } from "./hoc/Auth";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/">
-          <App />
-        </Route>
-      </Switch>
+      <AuthProvider>
+        <Wrapper />
+      </AuthProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")
