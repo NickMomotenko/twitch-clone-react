@@ -109,6 +109,7 @@ export const useData = () => {
       icon: fortineIcon,
       category: ["Shooter", "Battle royal"],
     },
+    
   ]);
 
   return { topGames, recommendedGames };

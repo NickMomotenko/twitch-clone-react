@@ -7,14 +7,18 @@ export const useSlider = () => {
 
   const [nativeDOM, setNativeDOM] = useState([]);
 
+  let position = 0;
+
+  let currentIndex = 1;
+
   const initSlider = (ref, list) => {
     let arr = Array.from(ref.children);
 
-    handleChangeSlider(arr, 1);
+    addCustomStyles(arr, currentIndex);
 
     arr.forEach((elem, index) => {
       elem.addEventListener("click", (e) => {
-        handleChangeSlider(arr, index);
+        handleChangeSlider(ref, arr, index);
       });
     });
 
@@ -22,7 +26,7 @@ export const useSlider = () => {
     setSliderInVisin(list);
   };
 
-  const handleChangeSlider = (arr, id) => {
+  const addCustomStyles = (arr, id) => {
     arr.forEach((elem, index) => {
       elem.style.transition = `all .5s`;
       elem.style.cursor = `pointer`;
@@ -30,10 +34,37 @@ export const useSlider = () => {
         elem.style.transform = `scale(1.1)`;
         elem.style.opacity = `1`;
       } else {
-        elem.style.transform = `scale(.9)`;
+        elem.style.transform = `scale(1)`;
         elem.style.opacity = `.5`;
       }
     });
+  };
+
+  const handleChangeSlider = (ref, arr, index) => {
+    let itemWidth = arr[0].offsetWidth;
+
+    addCustomStyles(arr, index);
+
+    if (currentIndex == index) {
+      return;
+    } else {
+      currentIndex = index;
+      position += itemWidth;
+
+      if (arr.length == ++currentIndex) {
+        return;
+      } else {
+        preformTransition(ref, position, "next");
+      }
+    }
+  };
+
+  const preformTransition = (list, pos, direction) => {
+    list.style.transition = `transform .5s`;
+
+    if (direction == "next") {
+      list.style.transform = `translateX(-${pos}px)`;
+    }
   };
 
   return { initSlider };
