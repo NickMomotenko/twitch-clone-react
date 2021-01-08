@@ -5,11 +5,18 @@ import { useHistory } from "react-router-dom";
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const [data, setData] = useState({
-    login: "test@mail.ru",
-    password: 123,
+    login: {
+      email: "test@mail.ru",
+      password: 123,
+    },
+    registration: {
+      name: "Test Name",
+      email: "test@mail.ru",
+      password: 123,
+    },
   });
 
   const history = useHistory();
@@ -21,7 +28,13 @@ export const AuthProvider = ({ children }) => {
   const logIn = () => {
     setIsLoggedIn(true);
 
-    history.push("/app");
+    setTimeout(() => history.push("/app"), 0);
+  };
+
+  const logOut = () => {
+    setIsLoggedIn(false);
+
+    setTimeout(() => history.push("/"), 0);
   };
 
   const registration = () => {
@@ -30,7 +43,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ data, isLoggedIn, setIsLoggedIn, onChange, logIn, registration }}
+      value={{
+        data,
+        isLoggedIn,
+        setIsLoggedIn,
+        onChange,
+        logIn,
+        logOut,
+        registration,
+      }}
     >
       {children}
     </AuthContext.Provider>

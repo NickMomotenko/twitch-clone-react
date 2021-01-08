@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { useData } from "./hooks/data";
 import { useUsersData } from "./hooks/users";
+import { useSlider, Slider } from "./hooks/slider";
 
 import streamingIcon from "./assets/icons/mic.png";
 import arrowIcon from "./assets/icons/left-arrow.png";
@@ -87,12 +88,17 @@ const AppMainContent = styled.div`
 `;
 
 const App = () => {
- 
-
   const { topGames, recommendedGames } = useData();
   const { data } = useUsersData();
 
- 
+  const { initSlider } = useSlider();
+
+  const testref = React.useRef();
+
+  React.useEffect(() => {
+    initSlider(testref.current , recommendedGames);
+  }, []);
+
   return (
     <AppWrapper>
       <AppBar>
@@ -121,23 +127,26 @@ const App = () => {
       <AppMainDashboadr>
         <Header />
         <AppMainContent>
-          {/* <Switch>
+          <Switch>
             <Route path="/dashboard" component={ChanelDashboard} />
-            <Route path="/dashboard">
+            <Route path="/app">
               <AppMainContentBlock>
                 <AppMainContentTitle>
                   <Title title="Recommended for you" />
                 </AppMainContentTitle>
+
                 <GeneralList marginRight="40" wrap="false">
-                  {recommendedGames.map((item) => (
-                    <Item
-                      key={item.id}
-                      widthCount={3.3}
-                      iconHeight={250}
-                      marginRight="40"
-                      {...item}
-                    />
-                  ))}
+                  <Slider ref={testref}>
+                    {recommendedGames.map((item) => (
+                      <Item
+                        key={item.id}
+                        widthCount={3}
+                        iconHeight={250}
+                        marginRight="40"
+                        {...item}
+                      />
+                    ))}
+                  </Slider>
                 </GeneralList>
 
                 <AppMainContentTitle>
@@ -156,7 +165,7 @@ const App = () => {
                 </GeneralList>
               </AppMainContentBlock>
             </Route>
-          </Switch> */}
+          </Switch>
         </AppMainContent>
       </AppMainDashboadr>
     </AppWrapper>

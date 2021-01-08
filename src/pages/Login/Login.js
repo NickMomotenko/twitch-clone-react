@@ -2,10 +2,9 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Logo from "../../components/Logo/Logo";
 import { withAuth } from "../../hoc/Auth";
 
-// import { useData } from "../../hooks/login";
+import Logo from "../../components/Logo/Logo";
 
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
@@ -30,6 +29,12 @@ const LoginContent = styled.form`
   overflow: hidden;
 `;
 
+const LoginBlockTitle = styled.div`
+  font-weight: 700;
+  color: #fff;
+  font-size: 41px;
+`;
+
 const LoginBg = styled.div`
   background-color: purple;
 
@@ -42,7 +47,7 @@ const LoginBg = styled.div`
   align-items: center;
   justify-content: center;
 
-  .sc-hOqqkJ {
+  ${LoginBlockTitle} {
     font-size: 27px;
     margin-left: 20px;
   }
@@ -65,12 +70,6 @@ const LoginBlock = styled.div`
       margin-bottom: 0 !important;
     }
   }
-`;
-
-const LoginBlockTitle = styled.div`
-  font-weight: 700;
-  color: #fff;
-  font-size: 41px;
 `;
 
 const LoginBlockSubtitle = styled(LoginBlockTitle)`
@@ -104,7 +103,9 @@ const Login = (props) => {
   const [isGetStarted, setIsGetStarted] = React.useState(true);
 
   const {
-    data: { login, password },
+    data: {
+      login: { email, password },
+    },
     onChange,
     logIn,
     registration,
@@ -138,7 +139,7 @@ const Login = (props) => {
                 <Input
                   placeholder="name"
                   name="login"
-                  value={login}
+                  value={email}
                   onChange={onChange}
                 />
               </Label>
