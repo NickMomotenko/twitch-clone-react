@@ -9,19 +9,19 @@ export const useSlider = () => {
 
   let currentIndex = 1;
 
-  const initSlider = (ref, list) => {
-    let arr = Array.from(ref.children);
+  // const initSlider = (ref, list) => {
+  //   let arr = Array.from(ref.children);
 
-    addCustomStyles(arr, currentIndex);
+  //   addCustomStyles(arr, currentIndex);
 
-    arr.forEach((elem, index) => {
-      elem.addEventListener("click", (e) => {
-        handleChangeSlider(ref, arr, index);
-      });
-    });
+  //   arr.forEach((elem, index) => {
+  //     elem.addEventListener("click", (e) => {
+  //       handleChangeSlider(ref, arr, index);
+  //     });
+  //   });
 
-    setSliderInVisin(list);
-  };
+  //   setSliderInVisin(list);
+  // };
 
   const addCustomStyles = (arr, ndx) => {
     arr.forEach((elem, index) => {
@@ -71,7 +71,7 @@ export const useSlider = () => {
     }
   };
 
-  return { initSlider };
+  // return { initSlider };
 };
 
 const SliderWrapp = styled.div`

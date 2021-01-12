@@ -24,11 +24,14 @@ const TextAreaWrapp = styled.textarea`
   }
 `;
 
-const TextArea = ({ placeholder, name }) => {
+const TextArea = ({ placeholder, value, name, onChange }) => {
   return (
-    <TextAreaWrapp placeholder={placeholder} name={name}>
-      {/* <ButtonOption url={smileIcon} /> */}
-    </TextAreaWrapp>
+    <TextAreaWrapp
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    ></TextAreaWrapp>
   );
 };
 

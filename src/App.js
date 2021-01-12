@@ -95,12 +95,12 @@ const App = () => {
   const { topGames, recommendedGames } = useData();
   const { data } = useUsersData();
 
-  const { initSlider } = useSlider();
+  // const { initSlider } = useSlider();
 
   const testref = React.useRef();
 
   React.useEffect(() => {
-    initSlider(testref.current, recommendedGames);
+    // initSlider(testref.current, recommendedGames);
   }, []);
 
   const handlers = useSwipeable({
@@ -138,7 +138,7 @@ const App = () => {
         <Header />
         <AppMainContent>
           <Switch>
-            <Route path="/dashboard" component={ChanelDashboard} />
+            <Route path="/app/dash" component={ChanelDashboard} />
             <Route path="/app">
               <AppMainContentBlock>
                 <AppMainContentTitle>
@@ -163,7 +163,7 @@ const App = () => {
                   wrap="false"
                   {...handlers}
                 >
-                  <Slider ref={testref}>
+                  {/* <Slider ref={testref}>
                     {recommendedGames.map((item) => (
                       <Item
                         key={item.id}
@@ -173,7 +173,7 @@ const App = () => {
                         {...item}
                       />
                     ))}
-                  </Slider>
+                  </Slider> */}
                 </GeneralList>
 
                 <AppMainContentTitle>

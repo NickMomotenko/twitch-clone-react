@@ -5,9 +5,11 @@ import styled from "styled-components";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 
-import { generateID } from "../../utils";
-
 import { useMessagesData } from "../../hooks/messages";
+
+import { useFirebase } from "../../hooks/firebase";
+
+import { useTextArea } from "../../hooks/textarea";
 
 import sendIcon from "../../assets/chat/send.svg";
 import smileIcon from "../../assets/icons/winking_face.gif";
@@ -71,6 +73,7 @@ const ChatBoardMain = styled.div`
   padding: 0 20px;
   margin-bottom: 20px;
   overflow-y: scroll;
+  // flex: 1;
 
   ::-webkit-scrollbar {
     width: 3px;
@@ -163,11 +166,28 @@ const ChatBoard = (props) => {
   const closeButtonRef = React.useRef(null);
 
   let { isFullSize, setIsFullSize } = props;
-  const { messages } = useMessagesData();
+  const { messages, setMessages, addNewMessage } = useMessagesData();
+
+  const { db } = useFirebase();
+
+  let { value, setValue, onChange } = useTextArea();
 
   React.useEffect(() => {
     chatBlockRef.current.scrollTop = chatBlockRef.current.scrollHeight;
   }, [messages]);
+
+  React.useEffect(() => {
+    db.collection("messages")
+      .orderBy("time")
+      .onSnapshot((snapshot) =>
+        setMessages(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+  }, []);
 
   React.useEffect(() => {
     if (isFullSize) {
@@ -199,12 +219,18 @@ const ChatBoard = (props) => {
           </ChatBoardHeaderCol>
         </ChatBoardHeader>
         <ChatBoardMain ref={chatBlockRef}>
-          {messages &&
-            messages.map((item) => <Message key={item.id} {...item} />)}
+          {messages.length
+            ? messages.map((item) => <Message key={item.id} {...item} />)
+            : `No messages...`}
         </ChatBoardMain>
         <ChatBoardBottom>
           <ChatBoardTextArea>
-            <TextArea placeholder="Send message..." name="send" />
+            <TextArea
+              placeholder="Send message..."
+              name="send"
+              value={value}
+              onChange={onChange}
+            />
           </ChatBoardTextArea>
           <ChatBoardButtons>
             {isEmojiPickerActive ? (
@@ -220,7 +246,14 @@ const ChatBoard = (props) => {
               onClick={() => setIsEmojiPickerActive(true)}
               size="25px"
             />
-            <ButtonOption icon={sendIcon} size="25px" />
+            <ButtonOption
+              icon={sendIcon}
+              size="25px"
+              onClick={() => {
+                addNewMessage(value);
+                setValue("");
+              }}
+            />
           </ChatBoardButtons>
         </ChatBoardBottom>
       </ChatBoardContent>
