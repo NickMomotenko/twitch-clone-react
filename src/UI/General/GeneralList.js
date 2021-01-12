@@ -9,6 +9,8 @@ const GeneralListWrapp = styled.div`
     props.marginRight ? `-${props.marginRight}px` : "0"};
   margin-bottom: 25px;
 
+  overflow: ${(props) => props.overflow && `${props.overflow}`};
+
   &:last-child {
     margin-bottom: 0;
   }

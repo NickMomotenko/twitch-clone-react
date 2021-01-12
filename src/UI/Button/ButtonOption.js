@@ -13,6 +13,8 @@ const ButtonOptionIcon = styled.img.attrs(({ url }) => ({
 
   height: ${(props) => (props.size ? props.size : "17px")};
   width: ${(props) => (props.size ? props.size : "17px")};
+
+  transform: ${(props) => props.rotate && `rotate(${props.rotate}deg)`};
 `;
 
 const ButtonOptionAlert = styled.div`
@@ -32,19 +34,10 @@ const ButtonOptionAlert = styled.div`
   right: -10px;
 `;
 
-// const ButtonOption = React.forwardRef({ icon, counter, onClick, size ,ref }) => {
-//   return (
-//     <ButtonOptionWrapp onClick={onClick} ref={ref}>
-//       <ButtonOptionIcon url={icon} size={size} />
-//       {counter && <ButtonOptionAlert>{counter}</ButtonOptionAlert>}
-//     </ButtonOptionWrapp>
-//   );
-// });
-
 const ButtonOption = React.forwardRef(
-  ({ icon, counter, onClick, size, children }, ref) => (
+  ({ icon, counter, onClick, size, children, ...rest }, ref) => (
     <ButtonOptionWrapp onClick={onClick} ref={ref}>
-      <ButtonOptionIcon url={icon} size={size} />
+      <ButtonOptionIcon url={icon} size={size} {...rest} />
       {counter && <ButtonOptionAlert>{counter}</ButtonOptionAlert>}
 
       {children}

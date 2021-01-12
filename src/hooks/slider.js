@@ -5,8 +5,6 @@ import styled from "styled-components";
 export const useSlider = () => {
   const [sliderInVisin, setSliderInVisin] = useState([]);
 
-  const [nativeDOM, setNativeDOM] = useState([]);
-
   let position = 0;
 
   let currentIndex = 1;
@@ -22,15 +20,14 @@ export const useSlider = () => {
       });
     });
 
-    setNativeDOM(arr);
     setSliderInVisin(list);
   };
 
-  const addCustomStyles = (arr, id) => {
+  const addCustomStyles = (arr, ndx) => {
     arr.forEach((elem, index) => {
       elem.style.transition = `all .5s`;
       elem.style.cursor = `pointer`;
-      if (index === id) {
+      if (index === ndx) {
         elem.style.transform = `scale(1.1)`;
         elem.style.opacity = `1`;
       } else {
@@ -40,21 +37,26 @@ export const useSlider = () => {
     });
   };
 
-  const handleChangeSlider = (ref, arr, index) => {
+  const handleChangeSlider = (ref, arr, ndx) => {
     let itemWidth = arr[0].offsetWidth;
 
-    addCustomStyles(arr, index);
+    addCustomStyles(arr, ndx);
 
-    if (currentIndex == index) {
+    if (currentIndex === ndx || ndx === 0 || ndx === arr.length - 1) {
       return;
     } else {
-      currentIndex = index;
-      position += itemWidth;
+      if (currentIndex > ndx) {
+        currentIndex = ndx;
 
-      if (arr.length == ++currentIndex) {
-        return;
-      } else {
+        position += itemWidth;
+
         preformTransition(ref, position, "next");
+      } else {
+        currentIndex = ndx;
+
+        position -= itemWidth;
+
+        preformTransition(ref, position, "prev");
       }
     }
   };
@@ -64,6 +66,8 @@ export const useSlider = () => {
 
     if (direction == "next") {
       list.style.transform = `translateX(-${pos}px)`;
+    } else {
+      list.style.transform = `translateX(${pos}px)`;
     }
   };
 
@@ -72,6 +76,7 @@ export const useSlider = () => {
 
 const SliderWrapp = styled.div`
   display: flex;
+  padding: 20px 0;
 `;
 
 export const Slider = React.forwardRef((props, ref) => {

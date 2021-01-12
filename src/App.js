@@ -2,6 +2,8 @@ import React from "react";
 
 import { Route, Switch } from "react-router-dom";
 
+import { useSwipeable } from "react-swipeable";
+
 import styled from "styled-components";
 
 import { useData } from "./hooks/data";
@@ -26,6 +28,8 @@ import GeneralList from "./UI/General/GeneralList";
 import ChanelDashboard from "./components/ChanelDashboard/ChanelDashboard";
 
 import Login from "./pages/Login/Login";
+import { Row } from "./UI/Layout/Layout";
+import ButtonOption from "./UI/Button/ButtonOption";
 
 const AppWrapper = styled.div`
   height: 100%;
@@ -96,8 +100,14 @@ const App = () => {
   const testref = React.useRef();
 
   React.useEffect(() => {
-    initSlider(testref.current , recommendedGames);
+    initSlider(testref.current, recommendedGames);
   }, []);
+
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   return (
     <AppWrapper>
@@ -133,14 +143,31 @@ const App = () => {
               <AppMainContentBlock>
                 <AppMainContentTitle>
                   <Title title="Recommended for you" />
+                  <Row>
+                    <ButtonOption
+                      icon={arrowIcon}
+                      rotate="90"
+                      bgColor="#1f1d24"
+                    />
+                    <ButtonOption
+                      icon={arrowIcon}
+                      rotate="-90"
+                      bgColor="#1f1d24"
+                    />
+                  </Row>
                 </AppMainContentTitle>
 
-                <GeneralList marginRight="40" wrap="false">
+                <GeneralList
+                  marginRight="40"
+                  overflow="hidden"
+                  wrap="false"
+                  {...handlers}
+                >
                   <Slider ref={testref}>
                     {recommendedGames.map((item) => (
                       <Item
                         key={item.id}
-                        widthCount={3}
+                        widthCount={3.3}
                         iconHeight={250}
                         marginRight="40"
                         {...item}
