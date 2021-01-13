@@ -25,38 +25,38 @@ const OnlineStatus = ({ counter }) => {
 
   const counterRef = React.useRef(null);
 
-  React.useEffect(() => {
-    counterAnimation(defaultValue, counterValue, 3500);
-  }, []);
+  // React.useEffect(() => {
+  //   counterAnimation(defaultValue, counterValue, 3500);
+  // }, []);
 
-  React.useEffect(() => {
-    setInterval(() => {
-      let randomNumber = getRandomNumber(100);
-      counterAnimation(counterValue, randomNumber, 5000);
+  // React.useEffect(() => {
+  //   setInterval(() => {
+  //     let randomNumber = getRandomNumber(100);
+  //     counterAnimation(counterValue, randomNumber, 5000);
 
-      setCounterValue(randomNumber);
-    }, 10000);
-  }, [counterValue]);
+  //     setCounterValue(randomNumber);
+  //   }, 10000);
+  // }, [counterValue]);
 
-  const counterAnimation = (start, end, duration) => {
-    let startTimestamp;
+  // const counterAnimation = (start, end, duration) => {
+  //   let startTimestamp;
 
-    const step = (timestamp) => {
-      if (!startTimestamp) {
-        startTimestamp = timestamp;
-      }
+  //   const step = (timestamp) => {
+  //     if (!startTimestamp) {
+  //       startTimestamp = timestamp;
+  //     }
 
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      counterRef.current.innerText = `${Math.floor(
-        progress * (end - start) + start
-      )} viewers`;
+  //     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+  //     counterRef.current.innerText = `${Math.floor(
+  //       progress * (end - start) + start
+  //     )} viewers`;
 
-      if (progress < 1) window.requestAnimationFrame(step);
-    };
+  //     if (progress < 1) window.requestAnimationFrame(step);
+  //   };
 
-    window.requestAnimationFrame(step);
-  };
-  return <OnlineStatusWrapp ref={counterRef}></OnlineStatusWrapp>;
+  //   window.requestAnimationFrame(step);
+  // };
+  return <OnlineStatusWrapp ref={counterRef}>{counterValue}</OnlineStatusWrapp>;
 };
 
 export default OnlineStatus;

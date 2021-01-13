@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const TitleWrapp = styled.div`
   font-size: 25px;
-  margin-bottom: 45px;
+  /* margin-bottom: 45px; */
   color: #fff;
 `;
 

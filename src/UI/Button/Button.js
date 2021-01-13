@@ -5,10 +5,13 @@ import styled from "styled-components";
 const ButtonWrapp = styled.button`
   display: flex;
   align-items: center;
+  justify-content: center;
   border-radius: 7px;
   background-color: ${(props) => (props.bgColor ? props.bgColor : "#52299e")};
   padding: 14px 30px;
   transition: all 0.4s;
+  max-width: 100%;
+  /* width:100%; */
 
   &:hover {
     background-color: #4d2596;

@@ -9,13 +9,28 @@ import { HashRouter as Router } from "react-router-dom";
 import Wrapper from "./components/Wrapper/Wrapper";
 import { AuthProvider } from "./hoc/Auth";
 
+import { createStore, compose } from "redux";
+
+import { Provider } from "react-redux";
+
+import { rootReducer } from "./store/rootReducer";
+
+const store = createStore(
+  rootReducer,
+  compose(
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
+
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <AuthProvider>
-        <Wrapper />
-      </AuthProvider>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <AuthProvider>
+          <Wrapper />
+        </AuthProvider>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

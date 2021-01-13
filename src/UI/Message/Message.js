@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { generateUniqColor } from "../../utils";
+import { generateUniqColor, getCurrentTime } from "../../utils";
 
 import returnIcon from "../../assets/chat/return.svg";
 
@@ -14,6 +14,7 @@ const MessageWrapp = styled.div`
   margin-bottom: 15px;
   position: relative;
   cursor: pointer;
+  opacity: 0;
 
   padding: 3px 9px;
   border-radius: 4px;
@@ -27,12 +28,12 @@ const MessageWrapp = styled.div`
   &:hover {
     background-color: #332f40;
 
-    .sc-jrAGrp{
+    .sc-hHftDr {
       visibility: visible;
     }
   }
 
-  .sc-jrAGrp  {
+  .sc-hHftDr {
     position: absolute;
     visibility: hidden;
     top: -13px;
@@ -43,7 +44,7 @@ const MessageWrapp = styled.div`
     line-height: 100%;
 
     &:hover {
-      .sc-cTkwdZ {
+      .sc-iNqMTl {
         visibility: visible;
       }
     }
@@ -53,7 +54,7 @@ const MessageWrapp = styled.div`
 const MessageUserStatus = styled.div``;
 
 const MessageFullName = styled.span`
-  color: ${(props) => (props.color ? props.color : "blue")};
+  color: #438bc9;
 `;
 
 const MessageTime = styled.span`
@@ -68,13 +69,22 @@ const MessageText = styled.span`
   margin-left: 10px;
 `;
 
-const Message = ({ iconStatus, fullname = "king01", time = "12:10", text }) => {
+const Message = ({ iconStatus, data: { fullname, text, time } }) => {
+  React.useEffect(() => {
+    setTimeout(() => {
+      refTest.current.style.transition = "opacity .4s";
+      refTest.current.style.opacity = "1";
+    }, 500);
+  }, []);
+
+  let refTest = React.useRef(null);
+
   return (
-    <MessageWrapp>
+    <MessageWrapp ref={refTest}>
       {iconStatus && <MessageUserStatus></MessageUserStatus>}
 
-      <MessageFullName color={generateUniqColor()}>{fullname}</MessageFullName>
-      <MessageTime>{time}</MessageTime>
+      <MessageFullName>{fullname}</MessageFullName>
+      <MessageTime>{getCurrentTime(time)}</MessageTime>
       <MessageText>{text}</MessageText>
       <ButtonOption icon={returnIcon}>
         <AlertSmall text="Щелкните, чтобы ответить" />

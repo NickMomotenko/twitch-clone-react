@@ -14,6 +14,17 @@ export const generateID = () => {
   return "_" + Math.random().toString(36).substr(2, 9);
 };
 
-export const getRandomNumber = (max) =>{
-  return Math.floor(Math.random() * Math.floor(max))
-}
+export const getRandomNumber = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+
+export const getCurrentTime = (t) => {
+  let time = new Date(t?.seconds * 1000);
+
+  let hours = time.getHours();
+  let minutes = time.getMinutes();
+
+  return `${hours < 9 ? `0${hours}` : hours}:${
+    minutes < 9 ? `0${minutes}` : minutes
+  }`;
+};

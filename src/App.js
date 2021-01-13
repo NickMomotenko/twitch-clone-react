@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import { useSwipeable } from "react-swipeable";
 
@@ -26,6 +26,7 @@ import Item from "./UI/General/Item";
 import GeneralList from "./UI/General/GeneralList";
 
 import ChanelDashboard from "./components/ChanelDashboard/ChanelDashboard";
+import ProfileDashboard from "./components/ProfileDashboard/Profile";
 
 import Login from "./pages/Login/Login";
 import { Row } from "./UI/Layout/Layout";
@@ -89,18 +90,32 @@ const AppBarContentButton = styled.div`
 
 const AppMainContent = styled.div`
   height: 83%;
+  overflow-y: scroll;
+`;
+
+const AppButton = styled.div`
+  button {
+    margin-bottom: 20px;
+    width: 100%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 `;
 
 const App = () => {
   const { topGames, recommendedGames } = useData();
   const { data } = useUsersData();
 
-  const { initSlider } = useSlider();
+  const history = useHistory();
+
+  // const { initSlider } = useSlider();
 
   const testref = React.useRef();
 
   React.useEffect(() => {
-    initSlider(testref.current, recommendedGames);
+    // initSlider(testref.current, recommendedGames);
   }, []);
 
   const handlers = useSwipeable({
@@ -119,7 +134,18 @@ const App = () => {
             </AppLogo>
           </AppRow>
           <AppRow>
-            <Button label="Streaming" icon={streamingIcon} />
+            <AppButton>
+              <Button
+                label="My profile"
+                icon={streamingIcon}
+                onClick={() => history.push("/app/profile")}
+              />
+              <Button
+                label="Streaming"
+                icon={streamingIcon}
+                onClick={() => history.push("/app/dash")}
+              />
+            </AppButton>
           </AppRow>
           <Menu />
         </AppBarContent>
@@ -138,23 +164,12 @@ const App = () => {
         <Header />
         <AppMainContent>
           <Switch>
-            <Route path="/dashboard" component={ChanelDashboard} />
+            <Route path="/app/dash" component={ChanelDashboard} />
+            <Route path="/app/profile" component={ProfileDashboard} />
             <Route path="/app">
               <AppMainContentBlock>
                 <AppMainContentTitle>
                   <Title title="Recommended for you" />
-                  <Row>
-                    <ButtonOption
-                      icon={arrowIcon}
-                      rotate="90"
-                      bgColor="#1f1d24"
-                    />
-                    <ButtonOption
-                      icon={arrowIcon}
-                      rotate="-90"
-                      bgColor="#1f1d24"
-                    />
-                  </Row>
                 </AppMainContentTitle>
 
                 <GeneralList
@@ -163,7 +178,7 @@ const App = () => {
                   wrap="false"
                   {...handlers}
                 >
-                  <Slider ref={testref}>
+                  {/* <Slider ref={testref}>
                     {recommendedGames.map((item) => (
                       <Item
                         key={item.id}
@@ -173,7 +188,7 @@ const App = () => {
                         {...item}
                       />
                     ))}
-                  </Slider>
+                  </Slider> */}
                 </GeneralList>
 
                 <AppMainContentTitle>

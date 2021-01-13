@@ -54,9 +54,9 @@ const UserBlockCol = styled.div`
 `;
 
 const UserBlock = () => {
-  const {
-    data: { online, avatar },
-  } = useUserData();
+  // const {
+  //   data: { online, avatar },
+  // } = useUserData();
 
   const [isOptionActive, setIsOptionActive] = React.useState(false);
 
@@ -81,7 +81,7 @@ const UserBlock = () => {
         <Avatar
           size="56"
           borderRadius="5"
-          status={online}
+          status={true}
           statusColor="#12ff3f"
           statusBorderColor="#25222d"
           url="https://vignette.wikia.nocookie.net/nu-pogodi/images/8/82/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_7-%D0%B9.jpg/revision/latest/top-crop/width/360/height/450?cb=20200417145938&path-prefix=ru"
@@ -92,7 +92,7 @@ const UserBlock = () => {
           <Paper>
             <Row>
               <Column>
-                <Avatar url={avatar} />
+                <Avatar url="" />
               </Column>
               <Column></Column>
             </Row>

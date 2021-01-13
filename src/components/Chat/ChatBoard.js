@@ -5,9 +5,11 @@ import styled from "styled-components";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 
-import { generateID } from "../../utils";
-
 import { useMessagesData } from "../../hooks/messages";
+
+import { useFirebase } from "../../hooks/firebase";
+
+import { useTextArea } from "../../hooks/textarea";
 
 import sendIcon from "../../assets/chat/send.svg";
 import smileIcon from "../../assets/icons/winking_face.gif";
@@ -71,6 +73,11 @@ const ChatBoardMain = styled.div`
   padding: 0 20px;
   margin-bottom: 20px;
   overflow-y: scroll;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
   ::-webkit-scrollbar {
     width: 3px;
@@ -125,12 +132,15 @@ const ChatBoardBack = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  .eSxEXq {
+  .sc-gTgzIj {
     white-space: nowrap;
 
+    white-space: nowrap;
     position: absolute;
     top: 50%;
-    left: -15%;
+    left: 50%;
+    -webkit-transform: rotate(-90deg) translateY(-50%);
+    -ms-transform: rotate(-90deg) translateY(-50%);
     transform: rotate(-90deg) translate(-50%, -50%);
   }
 
@@ -163,11 +173,28 @@ const ChatBoard = (props) => {
   const closeButtonRef = React.useRef(null);
 
   let { isFullSize, setIsFullSize } = props;
-  const { messages } = useMessagesData();
+  const { messages, setMessages, addNewMessage } = useMessagesData();
+
+  const { db } = useFirebase();
+
+  let { value, setValue, onChange } = useTextArea();
 
   React.useEffect(() => {
     chatBlockRef.current.scrollTop = chatBlockRef.current.scrollHeight;
   }, [messages]);
+
+  React.useEffect(() => {
+    db.collection("messages")
+      .orderBy("time")
+      .onSnapshot((snapshot) =>
+        setMessages(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+  }, []);
 
   React.useEffect(() => {
     if (isFullSize) {
@@ -187,7 +214,7 @@ const ChatBoard = (props) => {
             <ChatBoardRules>Chat rules</ChatBoardRules>
           </ChatBoardHeaderCol>
           <ChatBoardHeaderCol>
-            {/* <OnlineStatus counter={20} /> */}
+            <OnlineStatus counter={20} />
           </ChatBoardHeaderCol>
 
           <ChatBoardHeaderCol>
@@ -199,12 +226,18 @@ const ChatBoard = (props) => {
           </ChatBoardHeaderCol>
         </ChatBoardHeader>
         <ChatBoardMain ref={chatBlockRef}>
-          {messages &&
-            messages.map((item) => <Message key={item.id} {...item} />)}
+          {messages.length
+            ? messages.map((item) => <Message key={item.id} {...item} />)
+            : `No messages...`}
         </ChatBoardMain>
         <ChatBoardBottom>
           <ChatBoardTextArea>
-            <TextArea placeholder="Send message..." name="send" />
+            <TextArea
+              placeholder="Send message..."
+              name="send"
+              value={value}
+              onChange={onChange}
+            />
           </ChatBoardTextArea>
           <ChatBoardButtons>
             {isEmojiPickerActive ? (
@@ -214,13 +247,19 @@ const ChatBoard = (props) => {
             ) : (
               <></>
             )}
-            <ButtonOption icon={smileIcon1} size="25px" />
             <ButtonOption
-              icon={smileIcon}
-              onClick={() => setIsEmojiPickerActive(true)}
+              icon={smileIcon1}
               size="25px"
+              onClick={() => setIsEmojiPickerActive(!isEmojiPickerActive)}
             />
-            <ButtonOption icon={sendIcon} size="25px" />
+            <ButtonOption
+              icon={sendIcon}
+              size="25px"
+              onClick={() => {
+                addNewMessage(value);
+                setValue("");
+              }}
+            />
           </ChatBoardButtons>
         </ChatBoardBottom>
       </ChatBoardContent>
@@ -231,8 +270,14 @@ const ChatBoard = (props) => {
           icon={closeIcon}
           onClick={() => setIsFullSize(false)}
         />
-        {/* <OnlineStatus counter={398} /> */}
-        <ChatBoardMessageButton>New message</ChatBoardMessageButton>
+        <OnlineStatus counter={20} />
+        <ChatBoardMessageButton
+          onClick={() => {
+            setIsFullSize(false);
+          }}
+        >
+          New message
+        </ChatBoardMessageButton>
       </ChatBoardBack>
     </ChatBoardWrapp>
   );

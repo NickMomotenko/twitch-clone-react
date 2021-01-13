@@ -1,19 +1,28 @@
 import React from "react";
 
-import messagesData from "../json/messages.json";
+import firebase from "firebase";
+
+// import messagesData from "../json/messages.json";
 
 import { generateID } from "../utils";
 
+import { useFirebase } from "./firebase";
+
 export const useMessagesData = () => {
-  const [messages, setMessages] = React.useState();
+  const [messages, setMessages] = React.useState([]);
 
-  React.useEffect(() => {
-    setMessages([
-      ...messagesData.map((item) => {
-        return { ...item, id: generateID() };
-      }),
-    ]);
-  }, []);
+  const { db } = useFirebase();
 
-  return { messages, setMessages };
+  const addNewMessage = (text) => {
+    if (!text) return;
+
+    db.collection("messages").add({
+      id: generateID(),
+      fullname: "test guy",
+      text: text,
+      time: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  };
+
+  return { messages, setMessages, addNewMessage };
 };

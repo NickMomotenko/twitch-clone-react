@@ -24,6 +24,7 @@ const LoginContent = styled.form`
   flex-direction: column;
 
   width: 51%;
+  max-width: 480px;
   box-shadow: 0 0 12px #fff;
   border-radius: 10px;
   overflow: hidden;
@@ -100,7 +101,7 @@ const LoginBlockButtons = styled.div`
 `;
 
 const Login = (props) => {
-  const [isGetStarted, setIsGetStarted] = React.useState(true);
+  const [isGetStarted, setIsGetStarted] = React.useState(false);
 
   const {
     data: {

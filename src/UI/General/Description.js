@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const DescriptionWrapp = styled.div`
   font-size: 18px;
-  margin-bottom: 45px;
+  /* margin-bottom: 45px; */
   color: #fff;
 `;
 

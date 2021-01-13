@@ -2,10 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import smileIcon from "../../assets/icons/smile-face.svg";
-
-import ButtonOption from "../Button/ButtonOption";
-
 const TextAreaWrapp = styled.textarea`
   border: 1px solid #5b79a2;
   border-radius: 5px;
@@ -24,11 +20,14 @@ const TextAreaWrapp = styled.textarea`
   }
 `;
 
-const TextArea = ({ placeholder, name }) => {
+const TextArea = ({ placeholder, value, name, onChange }) => {
   return (
-    <TextAreaWrapp placeholder={placeholder} name={name}>
-      {/* <ButtonOption url={smileIcon} /> */}
-    </TextAreaWrapp>
+    <TextAreaWrapp
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    ></TextAreaWrapp>
   );
 };
 

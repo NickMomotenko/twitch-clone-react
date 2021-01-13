@@ -15,7 +15,7 @@ const PaperWrapp = styled.div`
 
   display: inline-block;
 
-  width: 250px;
+  width: 100%;
   background-color: #fff;
 `;
 

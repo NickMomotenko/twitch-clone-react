@@ -1,14 +1,14 @@
 import React from "react";
 
-import styled from "styled-components";
+import { useSelector } from "react-redux";
 
-import offlineImg from "../../assets/video/offline.png";
+import styled from "styled-components";
 
 const VideoPlayerWrapp = styled.div`
   height: 670px;
 `;
 
-const VideoPlayerOfflineImg = styled.img.attrs(({url}) => ({
+const VideoPlayerOfflineImg = styled.img.attrs(({ url }) => ({
   src: url,
 }))`
   height: 100%;
@@ -17,9 +17,10 @@ const VideoPlayerOfflineImg = styled.img.attrs(({url}) => ({
 `;
 
 const VideoPlayer = () => {
+  const previewImg = useSelector((state) => state.user.chanelInfo.previewImage);
   return (
     <VideoPlayerWrapp>
-      <VideoPlayerOfflineImg url={offlineImg} />
+      <VideoPlayerOfflineImg url={previewImg} />
     </VideoPlayerWrapp>
   );
 };

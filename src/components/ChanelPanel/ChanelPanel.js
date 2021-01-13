@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { useUserData } from "../../hooks/userData";
+import { useSelector } from "react-redux";
 
 import uploadIcon from "../../assets/icons/upload.svg";
 import followIcon from "../../assets/chat/heart.svg";
@@ -49,9 +49,7 @@ const ChanelPanelRow = styled.div`
 const ChanelPanelColumn = styled.div``;
 
 const ChanelPanel = () => {
-  const {
-    data: { avatar, fullname },
-  } = useUserData();
+  const user = useSelector((state) => state.user);
 
   return (
     <ChanelPanelWrapp>
@@ -62,10 +60,10 @@ const ChanelPanel = () => {
         <ChanelPanelColumn>
           <Row>
             <Column>
-              <Avatar url={avatar} />
+              <Avatar url={user.avatar} />
             </Column>
             <Column>
-              <Title title={fullname} />
+              <Title title={user.fullname} />
               <Description text="Some description" />
               <ListGameTitle title="URL" />
             </Column>
@@ -74,7 +72,7 @@ const ChanelPanel = () => {
         <ChanelPanelColumn>
           <ChanelPanelRow>
             <Button label="Отслеживать" icon={followIcon} />
-            <Button label="Подписаться" icon={starIcon} />
+            {/* <Button label="Подписаться" icon={starIcon} /> */}
           </ChanelPanelRow>
           {/* <ChanelPanelRow>
             <ButtonOption icon={uploadIcon}>
