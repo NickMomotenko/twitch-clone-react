@@ -14,6 +14,7 @@ import { Row, Column } from "../../UI/Layout/Layout";
 
 import Avatar from "../../UI/Avatar/Avatar";
 import Button from "../../UI/Button/Button";
+import DonationButton from "../../UI/Button/DonationButton";
 import ButtonOption from "../../UI/Button/ButtonOption";
 
 import { AlertSmall } from "../../modules/Alert/AlertSmall";
@@ -71,6 +72,7 @@ const ChanelPanel = () => {
         </ChanelPanelColumn>
         <ChanelPanelColumn>
           <ChanelPanelRow>
+            <DonationButton label="Отблагодарить" />
             <Button label="Отслеживать" icon={followIcon} />
             {/* <Button label="Подписаться" icon={starIcon} /> */}
           </ChanelPanelRow>
