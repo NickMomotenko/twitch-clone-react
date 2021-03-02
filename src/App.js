@@ -91,6 +91,21 @@ const AppBarContentButton = styled.div`
 const AppMainContent = styled.div`
   height: 83%;
   overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #39434f;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
 `;
 
 const AppButton = styled.div`

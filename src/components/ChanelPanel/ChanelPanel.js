@@ -72,10 +72,10 @@ const ChanelPanel = () => {
         </ChanelPanelColumn>
         <ChanelPanelColumn>
           <ChanelPanelRow>
-            <DonationButton label="Отблагодарить" />
             <Button label="Отслеживать" icon={followIcon} />
             {/* <Button label="Подписаться" icon={starIcon} /> */}
           </ChanelPanelRow>
+          <DonationButton />
           {/* <ChanelPanelRow>
             <ButtonOption icon={uploadIcon}>
               <AlertSmall text="Поделиться" />

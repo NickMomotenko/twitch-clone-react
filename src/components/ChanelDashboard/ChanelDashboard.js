@@ -27,7 +27,7 @@ const ChanelDashboardCol = styled.div`
 
     ::-webkit-scrollbar-thumb {
       border-radius: 10px;
-      background-color: transparent;
+      background-color: #39434f;
     }
 
     ::-webkit-scrollbar-track {
